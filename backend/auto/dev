@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+cd $(dirname ${BASH_SOURCE[0]})/..
+
+docker-compose up dev || docker-compose down --remove-orphans

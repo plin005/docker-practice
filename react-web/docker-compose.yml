@@ -1,0 +1,18 @@
+version: "2.2"
+
+services:
+  base:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - .:/app
+      - node-module-cache:/app/node_modules
+
+  dev:
+    extends:
+      service: base
+    ports:
+      - "3000:3000"
+    command: bash -c "yarn install && yarn start"
+volumes:
+  node-module-cache:

@@ -1,0 +1,19 @@
+logging:
+  config: classpath:logback-spring.xml
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres_db:5432/test
+    username: admin
+    password: admin
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        show-sql: true
+        temp:
+          use_jdbc_metadata_defaults: false
+
+  #flyway: enabled

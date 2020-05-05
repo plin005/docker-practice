@@ -1,0 +1,42 @@
+version: "2.4"
+
+services:
+  base:
+    image: gradle:5.5.1-jdk11
+    working_dir: /app
+    volumes:
+      - .:/app
+      - gradle-cache:/home/gradle/.gradle
+
+  dev:
+    extends:
+      service: base
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+    networks:
+      - app_net
+    command: ./gradlew clean bootRun
+
+  postgres-db:
+    image: postgres:11.4
+    container_name: "test_postgres_db"
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: test
+    volumes:
+      - db-cache:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_net
+
+volumes:
+  gradle-cache:
+  db-cache:
+
+networks:
+  app_net:
